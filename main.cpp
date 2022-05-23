@@ -14,18 +14,15 @@ int main(int argc, char* argv[]) {
   return 0;
 }
 
-static void check(SUResult result, const char* message) {
-  if (result != SUResult::SU_ERROR_NONE) {
-    throw std::runtime_error(message);
-  }
-}
-
 void printNumOfLayers(std::string_view path) {
   SUInitialize();
+
   SUModelRef model{};
   SUModelCreateFromFile(&model, path.data());
+
   size_t layerCount;
-  check(SUModelGetNumLayers(model, &layerCount), "failed to read layer count");
+  SUModelGetNumLayers(model, &layerCount);
   std::cout << "Layer Count: " << layerCount << std::endl;
+
   SUTerminate();
 }
